@@ -1,25 +1,26 @@
-##UPDATES.IO
+# UPDATES.IO
 
-This is a webapp that allows creators to share short important information with their paid community in form of a written text.
+Updates.io is a web application designed to facilitate communication between creators and their paid community. It allows creators to share short, important updates in the form of written text.
 
-##Tools
-ReactJs for Frontend
-NestJs for Backend
+## Built With
 
+- Frontend: ReactJs
+- Backend: NestJs
 
-What  I need to work on:
+## TODOS
 
-Signup and sign IN pages
-Setup database for storing user information
+- User authentication: Sign up and sign in pages
+- User information storage: A database for storing user information
 
-User Schema:
-id: string
-name: string
-email: string
-age: number
-password: string
-isAcreator: boolean
-hasPaidPremiumForCurrentMonth: boolean
-numberOfUpdates: number
-sumOfLikes: number
-nameOfCorner: string
+## User Schema
+
+- id: string
+- name: string
+- email: string
+- age: number
+- password: string
+- isAcreator: boolean
+- hasPaidPremiumForCurrentMonth: boolean
+- numberOfUpdates: number
+- sumOfLikes: number
+- nameOfCorner: string
