@@ -8,7 +8,7 @@ Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }), //Provides global access to environment variables
     TypeOrmModule.forRoot({
-      host: 'localhost',
+      host: 'localhost', //Host should be passed in as an environment variable
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       port: 3000,
