@@ -1,4 +1,4 @@
-import { Get, Delete, Controller, Param, Post, Body } from '@nestjs/common';
+import { Get, Controller, Param, Post, Body } from '@nestjs/common';
 import { User } from '../entities/user/user.entity';
 import { UserService } from '../services/users.service';
 import { SignUpDTO } from '../DTOs/userDTO/signUp.DTO';
@@ -7,7 +7,7 @@ import { SignUpDTO } from '../DTOs/userDTO/signUp.DTO';
 export class UsersController {
   constructor(private readonly userService: UserService) {}
 
-  @Get('')
+  @Get('/')
   findAllUsers(): Promise<User[]> {
     return this.userService.findAll();
   }
@@ -17,8 +17,8 @@ export class UsersController {
     return this.userService.findOneUser(id);
   }
 
-  @Post('/add/user')
-  async addUser(@Body() userData: SignUpDTO): Promise<any> {
-    await this.userService.addUserService(userData);
+  @Post('/')
+  async addUser(@Body() userData: SignUpDTO): Promise<User> {
+    return await this.userService.addUserService(userData);
   }
 }
