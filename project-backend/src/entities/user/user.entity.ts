@@ -20,6 +20,15 @@ export class User {
   @Column()
   password: string;
 
+  @Column()
+  dateOfBirth: Date;
+
   @Column({ default: true })
   isActive: boolean;
+
+  @Column()
+  location: string;
+
+  @Column({ default: 'novice' })
+  rank: string;
 }
