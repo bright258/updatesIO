@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from '../entities/user/user.entity';
+import { User } from '../entities/user.entity';
 import { SignUpDTO } from '../DTOs/userDTO/signUp.DTO';
-import { HashUserPassword } from '../utils/signUp.utils';
+
 @Injectable()
 export class UserService {
   constructor(
@@ -11,12 +11,12 @@ export class UserService {
     private userRepository: Repository<User>,
   ) {}
 
-  findAll(): Promise<User[]> {
-    return this.userRepository.find();
+  async findAll(): Promise<User[]> {
+    return await this.userRepository.find();
   }
 
-  findOneUser(id: string): Promise<User | null> {
-    return this.userRepository.findOneBy({ id });
+  async findOneUser(id: string): Promise<User | null> {
+    return await this.userRepository.findOneBy({ id });
   }
 
   async removeUser(id: string): Promise<void> {
@@ -24,11 +24,8 @@ export class UserService {
   }
 
   async addUserService(user: SignUpDTO): Promise<User> {
-    const newPassword = await HashUserPassword.prototype.hashUserPassword(
-      user.password,
-    );
-    user.password = newPassword;
-    return this.userRepository.save(user);
+    const newUser = this.userRepository.create(user);
+    return await this.userRepository.save(newUser);
   }
 
   // loginUserService(): Pro
