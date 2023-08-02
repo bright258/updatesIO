@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserModule } from './modules/users.module';
+import { UserModule } from './modules/user/users.module';
 import { ConfigModule } from '@nestjs/config';
+import { AuthModule } from './modules/auth/auth.module';
 
 Module({
   imports: [
@@ -17,6 +18,7 @@ Module({
       migrations: ['./dist/migrations/*.js'], //You can add a path to your migrations here, take a look at the typeorm docs for more info. This will prevent manual addition of migrations in the future.
     }),
     UserModule,
+    AuthModule,
   ],
 });
 export class AppModule {}
