@@ -1,26 +1,38 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import{ SignUp } from './components/signUp.page';
+import {Login} from './components/login.page';
+import { Link, BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {Welcome} from './components/welcome.page';
+import {RecommendationPage} from './components/recommendation.page';
+import {MatchRecommendation} from './components/matchRecommendations.page';
+import {HomePage} from './components/home.page';
+import {Profile} from './components/profile.page';
+
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Router>
+        <Routes>
+          <Route path="/" element={<SignUp />}></Route>
+          <Route path="/login" element={<Login />}></Route>
+          <Route path="/home" element={<HomePage />}></Route>
+          <Route path="/profile" element={<Profile />}></Route>
+
+          <Route path="/welcome" element={<Welcome />}></Route>
+          <Route
+            path="/creator_recommendation"
+            element={<RecommendationPage />}
+          ></Route>
+          <Route path="/match" element={<MatchRecommendation />}></Route>
+        </Routes>
+      </Router>
     </div>
   );
 }
 
 export default App;
+
