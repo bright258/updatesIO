@@ -12,7 +12,7 @@ export class CreateNewUserTable1691308460851 implements MigrationInterface {
             userName text,
             password text,
             country text,
-            dateOfBirth text
+            
     
 
         )

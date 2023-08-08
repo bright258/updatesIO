@@ -1,9 +1,15 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  Injectable,
+  UnauthorizedException,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/user/entities/user.entity';
+import { CreateAuthDto } from './dto/create-auth.dto';
 
 @Injectable()
 export class AuthService {
@@ -13,35 +19,51 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async signIn(CreateAuthDto) {
-    const existingUser = await this.checkIfUserAlreadyExists(CreateAuthDto);
+  async signIn(createAuthDto: CreateAuthDto) {
+    const existingUser = await this.checkIfUserAlreadyExists(createAuthDto);
 
     if (existingUser) {
-      this.checkIfPasswordsAreTheSame(CreateAuthDto.password, existingUser);
+      await this.checkIfPasswordsAreTheSame(
+        createAuthDto.password,
+        existingUser,
+      );
 
       const payload = {
         sub: existingUser?.id,
-        username: CreateAuthDto.userName,
+        username: createAuthDto.username,
       };
-      return await this.jwtService.signAsync(payload);
+      return this.jwtService.signAsync(payload);
+    } else {
+      throw new HttpException(
+        {
+          status: HttpStatus.NOT_FOUND,
+          error: 'User not found',
+        },
+        HttpStatus.NOT_FOUND,
+      );
     }
   }
 
-  private async checkIfUserAlreadyExists(CreateAuthDto) {
-    const user = await this.userRepository.findOneBy({
-      userName: CreateAuthDto.userName,
-    });
-    if (user) {
+  private async checkIfUserAlreadyExists(createAuthDto: CreateAuthDto) {
+    try {
+      const user = await this.userRepository.findOneBy({
+        userName: createAuthDto.username,
+      });
       return user;
+    } catch (err) {
+      return err;
     }
-    throw new UnauthorizedException();
   }
 
   private async checkIfPasswordsAreTheSame(password: string, user: any) {
-    const passwordsAretheSame = await bcrypt.compare(password, user?.password);
-    if (passwordsAretheSame === false) {
-      throw new UnauthorizedException();
+    try {
+      const passwordsAretheSame = bcrypt.compare(password, user?.password);
+      if (passwordsAretheSame === false) {
+        throw new UnauthorizedException();
+      }
+      return true;
+    } catch (err) {
+      return err;
     }
-    return true;
   }
 }

@@ -36,9 +36,9 @@ export class User {
   @IsNotEmpty()
   password: string;
 
-  @Column()
-  @IsNotEmpty()
-  dateOfBirth: Date;
+  // @Column()
+  // @IsNotEmpty()
+  // BirthYear: number;
 
   @Column({ default: true })
   isActive: boolean;

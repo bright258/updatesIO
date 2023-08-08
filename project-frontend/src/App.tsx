@@ -9,18 +9,24 @@ import {RecommendationPage} from './components/recommendation.page';
 import {MatchRecommendation} from './components/matchRecommendations.page';
 import {HomePage} from './components/home.page';
 import {Profile} from './components/profile.page';
+import axios from 'axios';
+import {ToastContainer} from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+
 
 
 
 function App() {
   return (
     <div>
+      <ToastContainer />
       <Router>
         <Routes>
           <Route path="/" element={<SignUp />}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/home" element={<HomePage />}></Route>
           <Route path="/profile" element={<Profile />}></Route>
+
 
           <Route path="/welcome" element={<Welcome />}></Route>
           <Route
@@ -35,4 +41,3 @@ function App() {
 }
 
 export default App;
-

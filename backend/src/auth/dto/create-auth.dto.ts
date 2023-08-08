@@ -1,5 +1,5 @@
 export class CreateAuthDto {
-  userName: string;
+  username: string;
 
   password: string;
 }
