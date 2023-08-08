@@ -8,13 +8,14 @@ import { AuthGuard } from 'src/auth/auth.guard';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Post()
+  @Post('/post')
   create(@Body() createUserDto: CreateUserDto) {
+    console.log(createUserDto);
     return this.userService.create(createUserDto);
   }
 
   @Get()
-  @UseGuards(AuthGuard)
+  // @UseGuards(AuthGuard)
   findAll(): Promise<User[]> {
     return this.userService.findAll();
   }

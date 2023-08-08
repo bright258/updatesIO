@@ -35,6 +35,6 @@ export class CreateUserDto {
   @IsNotEmpty()
   country: string;
 
-  @IsNotEmpty()
-  dateOfBirth: Date;
+  // @IsNotEmpty()
+  // BirthYear: number;
 }
