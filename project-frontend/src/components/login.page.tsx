@@ -1,28 +1,44 @@
 import { Logo } from "./logo";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-export function Login() {
+export function Login( props: {setuserIdentification: any} ) {
+
+  function parseJwt(token: string) {
+    if (!token) {
+      return;
+    }
+    const base64Url = token.split(".")[1];
+    const base64 = base64Url.replace("-", "+").replace("_", "/");
+    return JSON.parse(window.atob(base64));
+  }
+
+  
+
   let navigate = useNavigate();
   const handleSubmit = async (event: any) => {
     event.preventDefault();
+
     const data = new FormData(event.currentTarget);
     const form = {
       username: data.get("username"),
       password: data.get("password"),
     };
 
-     axios
+    axios
       .post("http://localhost:4000/auth/", form)
       .then((res) => {
-        if (res.status === 201){
-          console.log(res)
-          navigate("/welcome");
-           toast.success("Welcome", {
-             position: toast.POSITION.TOP_RIGHT,
-           });
+        if (res.status === 201) {
+          console.log(parseJwt(res.data).sub);
 
+          props.setuserIdentification( parseJwt(res.data).sub);
+
+          navigate("/welcome");
+
+          toast.success(`Welcome`, {
+            position: toast.POSITION.TOP_RIGHT,
+          });
         }
       })
       .catch((err) => {
@@ -32,8 +48,8 @@ export function Login() {
           });
         }
       });
-  
   };
+
   return (
     <div className="content-center ml-10">
       <Logo />
@@ -47,7 +63,6 @@ export function Login() {
             name="username"
             className="border-solid outline-black m-9 "
             required
-          
           ></input>
           <input
             type="text"

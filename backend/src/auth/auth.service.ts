@@ -1,9 +1,4 @@
-import {
-  Injectable,
-  UnauthorizedException,
-  HttpException,
-  HttpStatus,
-} from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { Repository } from 'typeorm';
@@ -23,16 +18,25 @@ export class AuthService {
     const existingUser = await this.checkIfUserAlreadyExists(createAuthDto);
 
     if (existingUser) {
-      await this.checkIfPasswordsAreTheSame(
+      const passwordChecker = await this.checkIfPasswordsAreTheSame(
         createAuthDto.password,
         existingUser,
       );
-
-      const payload = {
-        sub: existingUser?.id,
-        username: createAuthDto.username,
-      };
-      return this.jwtService.signAsync(payload);
+      if (passwordChecker === false) {
+        throw new HttpException(
+          {
+            status: HttpStatus.NOT_FOUND,
+            error: 'Invalid password',
+          },
+          HttpStatus.NOT_FOUND,
+        );
+      } else {
+        const payload = {
+          sub: existingUser?.id,
+          username: existingUser?.username,
+        };
+        return this.jwtService.signAsync(payload);
+      }
     } else {
       throw new HttpException(
         {
@@ -57,11 +61,16 @@ export class AuthService {
 
   private async checkIfPasswordsAreTheSame(password: string, user: any) {
     try {
-      const passwordsAretheSame = bcrypt.compare(password, user?.password);
+      const passwordsAretheSame: boolean = await bcrypt.compare(
+        password,
+        user?.password,
+      );
+
       if (passwordsAretheSame === false) {
-        throw new UnauthorizedException();
+        return false;
+      } else {
+        return true;
       }
-      return true;
     } catch (err) {
       return err;
     }
