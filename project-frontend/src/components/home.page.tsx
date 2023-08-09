@@ -1,7 +1,7 @@
 import { Logo } from "./logo";
 import {Link} from "react-router-dom";
 
-export function HomePage(){
+export function HomePage(props: {userIdentification: any}) {
   return (
     <div className="content-center ml-10">
       <Logo />
@@ -9,7 +9,7 @@ export function HomePage(){
       <br />
       <br />
       <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
-        <Link to="/profile">Profile</Link>
+        <Link to="/profile">Profile {props.userIdentification}</Link>
       </button>
 
       <div className="p-6 max-w-xl mx-auto bg-blue-300 rounded-xl shadow-lg flex items-center space-x-4 w-screen">
