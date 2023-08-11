@@ -12,31 +12,29 @@ export class UpdateService {
     private updateService: Repository<Update>,
   ) {}
   async create(createUpdateDto: CreateUpdateDto) {
-    const update = this.updateService.create(createUpdateDto);
-    return this.updateService.save(update);
+    return await this.updateService.save(
+      this.updateService.create(createUpdateDto),
+    );
   }
 
-  findAll(cornerId) {
-    return this.updateService.find();
+  async findAll(cornerId: string): Promise<Update[]> {
+    return (await this.updateService.find()).filter(
+      (item) => item.cornerId === cornerId,
+    );
   }
 
-  private checkIfCornerExists(cornerId) {
-    return;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} update`;
+  async findOne(id: string) {
+    return await this.updateService.findOneBy({ id: id });
   }
 
   async update(id: string, updateUpdateDto: UpdateUpdateDto) {
-    const itemToUpdate = await this.updateService.findOneBy({ id: id });
-    itemToUpdate.content = updateUpdateDto.content;
-    itemToUpdate.pinned = updateUpdateDto.pinned;
-
-    return this.updateService.save(itemToUpdate);
+    return await this.updateService.update(
+      { id },
+      { content: updateUpdateDto.content, pinned: updateUpdateDto.pinned },
+    );
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} update`;
+  async remove(id: string) {
+    return await this.updateService.delete({ id: id });
   }
 }

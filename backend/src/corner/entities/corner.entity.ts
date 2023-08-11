@@ -24,6 +24,12 @@ export class Corner {
   numberOfAvailableUpdateToken: number;
 
   @Column()
+  category: string;
+
+  @Column({ default: '' })
+  profilePictureUrl: string;
+
+  @Column()
   @Index()
   ownerId: string;
 }

@@ -24,3 +24,57 @@ Updates.io is a web application designed to facilitate communication between cre
 - numberOfUpdates: number
 - sumOfLikes: number
 - nameOfCorner: string
+
+===========================================================
+
+### Testing: 
+
+## FOR BACKEND
+
+create  Create --- POST  localhost:4000/user/post
+user:
+{
+   "firstName":"Emeka",
+   "lastName":"Uche",
+   "email": "emekso@gmail.com",
+   "userName":"emeksi",
+   "password":"HL&5g#kS)e25h&e",
+   "country":"Nigeria"
+      
+    }
+
+=======
+Login --- POST  localhost:4000/auth
+
+auth:{
+   "username":"emeksi",
+   "password":"HL&5g#kS)e25h&e"
+
+}
+
+=======
+Create --- POST  localhost:4000/corner
+corner:
+
+{
+
+   "name": "string",
+
+  "description": "strinmfjfjlnflnfikning",
+
+  "numberOfTokensNeededToJoin": 122,
+
+  "ownerId": "32419388-c2f0-464f-9125-3da45b352855",
+
+  "profilePictureUrl": "string",
+
+  "category": "crypto"
+      
+    }
+
+
+
+## For Frontend:
+
+localhost:3000 - Sign Up
+localhost:3000/login - Log In

@@ -53,6 +53,7 @@ export class AuthService {
       const user = await this.userRepository.findOneBy({
         userName: createAuthDto.username,
       });
+      console.log(user);
       return user;
     } catch (err) {
       return err;
