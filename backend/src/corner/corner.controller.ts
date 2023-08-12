@@ -17,7 +17,6 @@ export class CornerController {
 
   @Post()
   create(@Body() createCornerDto: CreateCornerDto) {
-    // console.log(CreateCornerDto);
     return this.cornerService.create(createCornerDto);
   }
 

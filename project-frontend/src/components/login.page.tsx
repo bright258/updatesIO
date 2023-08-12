@@ -32,7 +32,6 @@ export function Login(props: {
       .post("http://localhost:4000/auth/", form)
       .then((res) => {
         if (res.status === 201) {
-          console.log(parseJwt(res.data).sub);
           props.setuserIdentification(parseJwt(res.data).sub);
 
           navigate("/welcome");

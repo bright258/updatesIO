@@ -1,9 +1,7 @@
 import { Logo } from "./logo";
-import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import firebase from "firebase/app";
 import "firebase/storage";
 
 export function SignUp() {
@@ -28,7 +26,6 @@ export function SignUp() {
         signal: AbortSignal.timeout(5000),
       })
       .then((res) => {
-        console.log(res)
         navigate("/login");
         toast.success(`Success`, {
           position: toast.POSITION.TOP_RIGHT,

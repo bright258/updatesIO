@@ -1,6 +1,5 @@
 import { Logo } from "./logo";
-import {Link, useNavigate} from "react-router-dom";
-import axios from 'axios';
+import { useNavigate} from "react-router-dom";
 
 export function RecommendationPage( props: { setInterestMap: any } ) {
   let navigate = useNavigate();
