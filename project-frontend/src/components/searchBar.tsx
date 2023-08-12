@@ -1,4 +1,4 @@
-
+import {useNavigate} from 'react-router-dom';
 export function searchHandler(e: any, cornerList: any, setQuery: any) {
   e.preventDefault();
 
@@ -6,13 +6,15 @@ export function searchHandler(e: any, cornerList: any, setQuery: any) {
   const form = {
     search: data.get("search"),
   };
-  
+
   setQuery(form.search);
 
   return form;
 }
 
-export function SearchBarResult(props: { cornerList: any; query: any }) {
+export function SearchBarResult(props: { cornerList: any; query: any; setChosenCorner: any }) {
+  let navigate = useNavigate();
+
   const searchResult = props.cornerList.filter((i: any) =>
     i.name.includes(props.query)
   );
@@ -23,9 +25,41 @@ export function SearchBarResult(props: { cornerList: any; query: any }) {
           <div>
             Your searches::
             {searchResult.map((i: any) => {
+              
+              
+
               return (
                 <div>
-                  <li>{i.name}</li>
+                  <li>
+                    <img
+                      src={i.profilePictureUrl}
+                      alt="horse"
+                      width="100"
+                      height="300"
+                      className="rounded-lg inline-flex"
+                    />
+                    {"   " +
+                      i.name +
+                      " " +
+                      i.description +
+                      " " +
+                      i.numberOfTokensNeededToJoin +
+                      " " +
+                      i.category +
+                      " "}
+                    <button
+                      onClick={() => {
+                        navigate("/profile");
+                        props.setChosenCorner(i)
+                        // a lot going in here
+                        // setChosenCornerInfo
+
+                      }}
+                      className="my-5 ml-20 mb-0 bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded"
+                    >
+                      Join
+                    </button>{" "}
+                  </li>
                 </div>
               );
             })}

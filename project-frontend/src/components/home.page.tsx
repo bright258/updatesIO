@@ -1,12 +1,21 @@
 import { Logo } from "./logo";
 import { Link } from "react-router-dom";
 import { ListCorners, Corner } from "./listCorner";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { SearchBarResult, searchHandler } from "./searchBar";
 
 export function HomePage(props: { userIdentification: any }) {
   const [cornerList, setCornerList] = useState<Corner[]>([]);
   const [query, setQuery] = useState();
+  const [chosenCorner, setChosenCorner] = useState()
+
+  useEffect(()=> {
+    if(chosenCorner){
+      
+      
+    }
+
+  })
 
   return (
     <>
@@ -37,7 +46,15 @@ export function HomePage(props: { userIdentification: any }) {
             </div>
           </div>
         </div>
-        <SearchBarResult query={query} cornerList={cornerList} />
+        <br></br>
+        <SearchBarResult
+          query={query}
+          cornerList={cornerList}
+          setChosenCorner={setChosenCorner}
+        />
+        <br></br>
+        <br></br>
+
         <hr></hr>
         <ListCorners cornerList={cornerList} setCornerList={setCornerList} />
       </div>
