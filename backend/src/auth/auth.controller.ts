@@ -15,7 +15,6 @@ export class AuthController {
   @Post()
   async signIn(@Body() createAuthDto: CreateAuthDto) {
     try {
-      console.log(createAuthDto);
       return await this.authService.signIn(createAuthDto);
     } catch (err) {
       throw new HttpException(

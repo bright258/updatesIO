@@ -25,18 +25,27 @@ export class CornerController {
     return this.cornerService.findAll();
   }
 
+  @Get('/category')
+  findAllInOneCategory(@Param('category') category: string) {
+    return this.cornerService.findAllInOneCategory(category);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.cornerService.findOne(+id);
+    return this.cornerService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateCornerDto: UpdateCornerDto) {
-    return this.cornerService.update(+id, updateCornerDto);
+    return this.cornerService.update(id, updateCornerDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.cornerService.remove(+id);
+    return this.cornerService.remove(id);
+  }
+  @Delete()
+  removeAll() {
+    return this.cornerService.removeAllCorners();
   }
 }

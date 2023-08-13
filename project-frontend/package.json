@@ -13,6 +13,8 @@
     "@types/react-dom": "^18.2.7",
     "axios": "^1.4.0",
     "emailjs-com": "^3.2.0",
+    "env-cmd": "^10.1.0",
+    "firebase": "^10.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.14.2",
@@ -23,10 +25,10 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "env-cmd -f ./.env.staging react-scripts start",
+    "build": "env-cmd -f ../../.env.staging react-scripts build",
+    "test": "env-cmd -f ../../.env.staging react-scripts test",
+    "eject": "env-cmd -f ../../.env.staging react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
@@ -45,5 +47,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/firebase": "^3.2.1"
   }
 }

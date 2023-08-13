@@ -11,24 +11,43 @@ export class CornerService {
     @InjectRepository(Corner)
     private cornerService: Repository<Corner>,
   ) {}
-  create(createCornerDto: CreateCornerDto) {
-    const corner = this.cornerService.create(createCornerDto);
-    return this.cornerService.save(corner);
+  async create(createCornerDto: CreateCornerDto) {
+    return await this.cornerService.save(
+      this.cornerService.create(createCornerDto),
+    );
   }
 
-  findAll() {
-    return `This action returns all corner`;
+  async findAll() {
+    return await this.cornerService.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} corner`;
+  async findAllInOneCategory(category: string) {
+    return (await this.cornerService.find()).filter(
+      (corner) => corner.category === category,
+    );
   }
 
-  update(id: number, updateCornerDto: UpdateCornerDto) {
-    return `This action updates a #${id} corner`;
+  async findOne(id: string) {
+    return await this.cornerService.findOneBy({ id });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} corner`;
+  async update(id: string, updateCornerDto: UpdateCornerDto) {
+    return await this.cornerService.update(
+      { id },
+      {
+        name: updateCornerDto.name,
+        description: updateCornerDto.description,
+        numberOfTokensNeededToJoin: updateCornerDto.numberOfTokensNeededToJoin,
+        profilePictureUrl: updateCornerDto.profilePictureUrl,
+      },
+    );
+  }
+
+  async remove(id: string) {
+    return await this.cornerService.delete({ id: id });
+  }
+
+  async removeAllCorners() {
+    return await this.cornerService.clear();
   }
 }

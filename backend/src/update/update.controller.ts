@@ -23,14 +23,14 @@ export class UpdateController {
     return this.updateService.create(createUpdateDto);
   }
 
-  // @Get()
-  // findAll() {
-  //   return this.updateService.findAll();
-  // }
+  @Get()
+  findAll(@Param('cornerId') cornerId: string) {
+    return this.updateService.findAll(cornerId);
+  }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.updateService.findOne(+id);
+    return this.updateService.findOne(id);
   }
 
   @Patch(':id')
@@ -40,6 +40,6 @@ export class UpdateController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.updateService.remove(+id);
+    return this.updateService.remove(id);
   }
 }

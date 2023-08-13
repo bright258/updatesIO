@@ -11,7 +11,11 @@ export class CreateCornerTable1691508098679 implements MigrationInterface {
         isActive boolean,
         incomeMade integer,
         numberOfAvailableUpdateToken integer,
-        ownerId text
+        ownerId text,
+        category text
+        profilePictureUrl text,
+
+
 
     )`);
   }
