@@ -20,6 +20,7 @@ function App() {
   const [interestMap, setInterestMap] = useState();
   const [chosenCorner, setChosenCorner] = useState();
   const [chosenCornerObject, setChosenCornerObject] = useState({});
+  const [userEmail, setUserEmail ] = useState()
 
   useEffect(() => {
     if (chosenCorner) {
@@ -61,7 +62,17 @@ function App() {
 
   useEffect(() => {
     if (userIdentification) {
+      console.log(userIdentification)
       localStorage.setItem("user", JSON.stringify(userIdentification));
+      axios
+        .get(`http://localhost:4000/user/${userIdentification}`)
+        .then((res) => {
+          console.log("dddd" + res.data.email);
+          setUserEmail(res.data.email);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   }, [userIdentification]);
 
@@ -128,6 +139,8 @@ function App() {
               <CornerInfo
                 chosenCorner={chosenCorner}
                 chosenCornerObject={chosenCornerObject}
+                userEmail={userEmail}
+                userIdentification={userIdentification}
               />
             }
           ></Route>

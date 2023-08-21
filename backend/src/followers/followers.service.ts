@@ -1,11 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { CreateFollowerDto } from './dto/create-follower.dto';
 import { UpdateFollowerDto } from './dto/update-follower.dto';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Follower } from './entities/follower.entity';
 
 @Injectable()
 export class FollowersService {
-  create(createFollowerDto: CreateFollowerDto) {
-    return 'This action adds a new follower';
+  constructor(
+    @InjectRepository(Follower)
+    private followerService: Repository<Follower>,
+  ) {}
+  async create(createFollowerDto: CreateFollowerDto) {
+    return await this.followerService.save(
+      this.followerService.create(createFollowerDto),
+    );
   }
 
   findAll() {

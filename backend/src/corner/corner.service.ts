@@ -31,6 +31,10 @@ export class CornerService {
     return await this.cornerService.findOneBy({ id });
   }
 
+  async findByOwnerId(ownerId: string) {
+    return this.cornerService.findOneBy({ ownerId: ownerId });
+  }
+
   async update(id: string, updateCornerDto: UpdateCornerDto) {
     return await this.cornerService.update(
       { id },

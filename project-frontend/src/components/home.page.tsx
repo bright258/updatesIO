@@ -52,7 +52,11 @@ export function HomePage(props: {
         <br></br>
         <br></br>
         <hr></hr>
-        <ListCorners cornerList={cornerList} setCornerList={setCornerList} />
+        <ListCorners
+          cornerList={cornerList}
+          setCornerList={setCornerList}
+          setChosenCorner={props.setChosenCorner}
+        />
         <br></br>
         <br></br>
       </div>

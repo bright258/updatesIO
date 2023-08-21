@@ -15,6 +15,8 @@ import { FollowersModule } from './followers/followers.module';
 import { Corner } from './corner/entities/corner.entity';
 import { Wallet } from './wallet/entities/wallet.entity';
 import { Follower } from './followers/entities/follower.entity';
+import { TransactionsModule } from './transactions/transactions.module';
+import { Transaction } from './transactions/entities/transaction.entity';
 
 @Module({
   imports: [
@@ -27,7 +29,7 @@ import { Follower } from './followers/entities/follower.entity';
       database: process.env.DB_DATABASE,
       type: 'postgres',
       synchronize: false,
-      entities: [User, Update, Corner, Wallet, Follower], //You can add a path to your entities here, take a look at the typeorm docs for more info. This will prevent manual addition of entities in the future.
+      entities: [User, Update, Corner, Wallet, Follower, Transaction], //You can add a path to your entities here, take a look at the typeorm docs for more info. This will prevent manual addition of entities in the future.
       migrations: [], //You can add a path to your migrations here, take a look at the typeorm docs for more info. This will prevent manual addition of migrations in the future.
     }),
     AuthModule,
@@ -36,6 +38,7 @@ import { Follower } from './followers/entities/follower.entity';
     CornerModule,
     WalletModule,
     FollowersModule,
+    TransactionsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
