@@ -2,27 +2,18 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-export type Corner = {
-  name: string;
-  description: string;
-  numberOfTokensNeededToJoin: number;
-  ownerId: string;
-  profilePictureUrl: string;
-  category: string;
-};
 
 export function ListCorners(props: { cornerList: any; setCornerList: any }) {
     let navigate = useNavigate();
 
   function list() {
     navigate('/profile')
-    console.log("ksksksksksksksk");
-    return <div></div>;
+    
   }
 
   useEffect(() => {
     axios
-      .get("http://localhost:4000/corner")
+      .get("http://localhost:4000/corner/")
       .then((res) => props.setCornerList(res.data))
       .catch((err) => console.log(err));
   });
