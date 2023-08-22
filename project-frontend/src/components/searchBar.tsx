@@ -1,4 +1,5 @@
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import {useEffect} from 'react';
 export function searchHandler(e: any, cornerList: any, setQuery: any) {
   e.preventDefault();
 
@@ -12,7 +13,13 @@ export function searchHandler(e: any, cornerList: any, setQuery: any) {
   return form;
 }
 
-export function SearchBarResult(props: { cornerList: any; query: any; setChosenCorner: any }) {
+export function SearchBarResult(props: {
+  cornerList: any;
+  query: any;
+  setChosenCorner: any;
+  chosenCorner: any;
+}) {
+
   let navigate = useNavigate();
 
   const searchResult = props.cornerList.filter((i: any) =>
@@ -25,9 +32,6 @@ export function SearchBarResult(props: { cornerList: any; query: any; setChosenC
           <div>
             Your searches::
             {searchResult.map((i: any) => {
-              
-              
-
               return (
                 <div>
                   <li>
@@ -49,10 +53,8 @@ export function SearchBarResult(props: { cornerList: any; query: any; setChosenC
                       " "}
                     <button
                       onClick={() => {
-                        navigate("/profile");
-                        props.setChosenCorner(i)
-                        // a lot going in here
-                        // setChosenCornerInfo
+                        props.setChosenCorner(i.id);
+                        navigate("/cornerInfo");
 
                       }}
                       className="my-5 ml-20 mb-0 bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded"

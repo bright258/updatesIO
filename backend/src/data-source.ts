@@ -6,6 +6,7 @@ import { Update } from './update/entities/update.entity';
 import { Corner } from './corner/entities/corner.entity';
 import { Wallet } from './wallet/entities/wallet.entity';
 import { Follower } from './followers/entities/follower.entity';
+import { Transaction } from './transactions/entities/transaction.entity';
 
 export const AppDataSource = new DataSource({
   type: 'postgres',
@@ -16,7 +17,7 @@ export const AppDataSource = new DataSource({
   database: process.env.DB_DATABASE,
   synchronize: false,
   logging: false,
-  entities: [User, Update, Corner, Wallet, Follower],
+  entities: [User, Update, Corner, Wallet, Follower, Transaction],
   migrations: ['./src/migration/*.ts'],
   subscribers: [],
 });

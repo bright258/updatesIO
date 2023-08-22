@@ -1,10 +1,6 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Logo } from "./logo";
 import { Profile } from "./profile.page";
-
-export function HappyWelcome() {
-  return;
-}
 
 export function Welcome(props: { isLoggedIn: any; numberOfLogIns: any }) {
   return (
@@ -31,6 +27,7 @@ export function Welcome(props: { isLoggedIn: any; numberOfLogIns: any }) {
               <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded content-center ">
                 <Link to="/creator_recommendation">Continue</Link>
               </button>
+            
             </div>
           ) : (
             <div>
@@ -50,5 +47,4 @@ export function Welcome(props: { isLoggedIn: any; numberOfLogIns: any }) {
     </div>
   );
 
-  //  ("/login");
 }

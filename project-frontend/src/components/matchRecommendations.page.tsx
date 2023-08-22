@@ -11,6 +11,11 @@ export function MatchRecommendation(){
       <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded content-center ">
         <Link to="/home">Continue</Link>
       </button>
+      <br></br>
+      <br></br>
+      {/* <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded content-center ">
+        <Link to="/cornerInfo">Chosen corner</Link>
+      </button> */}
     </div>
   );
 }

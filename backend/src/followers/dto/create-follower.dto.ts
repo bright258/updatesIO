@@ -1,1 +1,5 @@
-export class CreateFollowerDto {}
+export class CreateFollowerDto {
+  userId: string;
+
+  cornerId: string;
+}

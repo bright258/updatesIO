@@ -10,12 +10,38 @@ import { Profile } from "./components/profile.page";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useState, useEffect } from "react";
+import { CornerInfo } from "./components/cornerInfo.page";
+import axios from "axios";
 
 function App() {
   const [userIdentification, setuserIdentification] = useState();
   const [isLoggedIn, setisLoggedIn] = useState(false);
   const [numberOfLogIns, setNumberOfLogIns] = useState(0);
   const [interestMap, setInterestMap] = useState();
+  const [chosenCorner, setChosenCorner] = useState();
+  const [chosenCornerObject, setChosenCornerObject] = useState({});
+  const [userEmail, setUserEmail ] = useState()
+
+  useEffect(() => {
+    if (chosenCorner) {
+      axios
+        .get(`http://localhost:4000/corner/${chosenCorner}`)
+        .then((res) => {
+         
+          setChosenCornerObject(res.data)
+        }).catch((err)=> {
+          console.log(err)
+        });
+    }
+  });
+
+
+  useEffect(() => {
+    const chosenCorner = JSON.parse(
+      window.localStorage.getItem("chosenCorner")!
+    );
+    setChosenCorner(chosenCorner);
+  }, []);
 
   useEffect(() => {
     const numberOfLogIns = JSON.parse(
@@ -36,7 +62,17 @@ function App() {
 
   useEffect(() => {
     if (userIdentification) {
+      console.log(userIdentification)
       localStorage.setItem("user", JSON.stringify(userIdentification));
+      axios
+        .get(`http://localhost:4000/user/${userIdentification}`)
+        .then((res) => {
+          console.log("dddd" + res.data.email);
+          setUserEmail(res.data.email);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   }, [userIdentification]);
 
@@ -51,6 +87,13 @@ function App() {
       localStorage.setItem("numberOfLogIns", JSON.stringify(numberOfLogIns));
     }
   }, [numberOfLogIns]);
+
+  useEffect(() => {
+    if (chosenCorner) {
+      localStorage.setItem("chosenCorner", JSON.stringify(chosenCorner));
+    }
+  }, [chosenCorner]);
+
 
   return (
     <div>
@@ -71,7 +114,13 @@ function App() {
           ></Route>
           <Route
             path="/home"
-            element={<HomePage userIdentification={userIdentification} />}
+            element={
+              <HomePage
+                userIdentification={userIdentification}
+                setChosenCorner={setChosenCorner}
+                chosenCorner={chosenCorner}
+              />
+            }
           ></Route>
           <Route path="/profile" element={<Profile />}></Route>
 
@@ -84,6 +133,18 @@ function App() {
               />
             }
           ></Route>
+          <Route
+            path="/cornerInfo"
+            element={
+              <CornerInfo
+                chosenCorner={chosenCorner}
+                chosenCornerObject={chosenCornerObject}
+                userEmail={userEmail}
+                userIdentification={userIdentification}
+              />
+            }
+          ></Route>
+
           <Route
             path="/creator_recommendation"
             element={<RecommendationPage setInterestMap={setInterestMap} />}
