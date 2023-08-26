@@ -23,7 +23,7 @@ export class UpdateController {
     return this.updateService.create(createUpdateDto);
   }
 
-  @Get()
+  @Get(':cornerId')
   findAll(@Param('cornerId') cornerId: string) {
     return this.updateService.findAll(cornerId);
   }

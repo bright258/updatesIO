@@ -3,12 +3,14 @@ import { Link } from "react-router-dom";
 import { ListCorners } from "./listCorner";
 import { useState } from "react";
 import { SearchBarResult, searchHandler } from "./searchBar";
-import { Corner}  from '../../src/interfaces/corner.type';
+import { Corner } from "../../src/interfaces/corner.type";
+import { CornersBelongedTo } from "./listOfBelongedCorners.page";
 
 export function HomePage(props: {
   userIdentification: any;
   setChosenCorner: any;
   chosenCorner: any;
+  joinedCorner: any;
 }) {
   const [cornerList, setCornerList] = useState<Corner[]>([]);
   const [query, setQuery] = useState();
@@ -56,9 +58,12 @@ export function HomePage(props: {
           cornerList={cornerList}
           setCornerList={setCornerList}
           setChosenCorner={props.setChosenCorner}
+          joinedCorner={props.joinedCorner}
         />
         <br></br>
         <br></br>
+        {/* <h1>Corners You belong to:</h1> */}
+        {/* <CornersBelongedTo joinedCorner={props.joinedCorner} /> */}
       </div>
     </>
   );

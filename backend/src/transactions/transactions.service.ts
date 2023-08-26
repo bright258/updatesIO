@@ -23,7 +23,6 @@ export class TransactionsService {
     const corner = await this.cornerService.findByOwnerId(
       createTransactionDto.receiverId,
     );
-    console.log(corner);
 
     await this.followersService.create({
       cornerId: corner.id,

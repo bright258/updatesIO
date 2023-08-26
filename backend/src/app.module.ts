@@ -29,6 +29,7 @@ import { Transaction } from './transactions/entities/transaction.entity';
       database: process.env.DB_DATABASE,
       type: 'postgres',
       synchronize: false,
+      logging: false,
       entities: [User, Update, Corner, Wallet, Follower, Transaction], //You can add a path to your entities here, take a look at the typeorm docs for more info. This will prevent manual addition of entities in the future.
       migrations: [], //You can add a path to your migrations here, take a look at the typeorm docs for more info. This will prevent manual addition of migrations in the future.
     }),

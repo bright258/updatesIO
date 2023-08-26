@@ -37,7 +37,7 @@ export function SearchBarResult(props: {
                   <li>
                     <img
                       src={i.profilePictureUrl}
-                      alt="horse"
+                      alt="img"
                       width="100"
                       height="300"
                       className="rounded-lg inline-flex"

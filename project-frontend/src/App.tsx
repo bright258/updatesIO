@@ -7,6 +7,7 @@ import { RecommendationPage } from "./components/recommendation.page";
 import { MatchRecommendation } from "./components/matchRecommendations.page";
 import { HomePage } from "./components/home.page";
 import { Profile } from "./components/profile.page";
+import {CornerPage} from "./components/corner.page";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useState, useEffect } from "react";
@@ -20,21 +21,39 @@ function App() {
   const [interestMap, setInterestMap] = useState();
   const [chosenCorner, setChosenCorner] = useState();
   const [chosenCornerObject, setChosenCornerObject] = useState({});
-  const [userEmail, setUserEmail ] = useState()
+  const [userEmail, setUserEmail] = useState();
+  const [joinedCorner, setJoinedCorner] = useState([]);
+  const [updates, setUpdates] = useState([]);
+
 
   useEffect(() => {
     if (chosenCorner) {
       axios
         .get(`http://localhost:4000/corner/${chosenCorner}`)
         .then((res) => {
-         
-          setChosenCornerObject(res.data)
-        }).catch((err)=> {
-          console.log(err)
+          setChosenCornerObject(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
         });
+
+        axios
+          .get(`http://localhost:4000/update/${chosenCorner}`)
+          .then((res) => {
+            setUpdates(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
     }
   });
 
+  useEffect(() => {
+    const joinedCorner = JSON.parse(
+      window.localStorage.getItem("joinedCorner")!
+    );
+    setJoinedCorner(joinedCorner);
+  }, []);
 
   useEffect(() => {
     const chosenCorner = JSON.parse(
@@ -44,10 +63,17 @@ function App() {
   }, []);
 
   useEffect(() => {
+    const updates = JSON.parse(
+      window.localStorage.getItem("updates")!
+    );
+    setUpdates(updates);
+  }, []);
+
+  useEffect(() => {
     const numberOfLogIns = JSON.parse(
       window.localStorage.getItem("numberOfLogIns")!
     );
-    setInterestMap(numberOfLogIns);
+    setNumberOfLogIns(numberOfLogIns);
   }, []);
 
   useEffect(() => {
@@ -62,12 +88,10 @@ function App() {
 
   useEffect(() => {
     if (userIdentification) {
-      console.log(userIdentification)
       localStorage.setItem("user", JSON.stringify(userIdentification));
       axios
         .get(`http://localhost:4000/user/${userIdentification}`)
         .then((res) => {
-          console.log("dddd" + res.data.email);
           setUserEmail(res.data.email);
         })
         .catch((err) => {
@@ -83,6 +107,12 @@ function App() {
   }, [interestMap]);
 
   useEffect(() => {
+    if (joinedCorner) {
+      localStorage.setItem("joinedCorner", JSON.stringify(joinedCorner));
+    }
+  }, [joinedCorner]);
+
+  useEffect(() => {
     if (numberOfLogIns) {
       localStorage.setItem("numberOfLogIns", JSON.stringify(numberOfLogIns));
     }
@@ -91,9 +121,15 @@ function App() {
   useEffect(() => {
     if (chosenCorner) {
       localStorage.setItem("chosenCorner", JSON.stringify(chosenCorner));
+      
     }
   }, [chosenCorner]);
 
+   useEffect(() => {
+     if (updates) {
+       localStorage.setItem("updates", JSON.stringify(updates));
+     }
+   }, [updates]);
 
   return (
     <div>
@@ -119,6 +155,7 @@ function App() {
                 userIdentification={userIdentification}
                 setChosenCorner={setChosenCorner}
                 chosenCorner={chosenCorner}
+                joinedCorner={joinedCorner}
               />
             }
           ></Route>
@@ -141,6 +178,8 @@ function App() {
                 chosenCornerObject={chosenCornerObject}
                 userEmail={userEmail}
                 userIdentification={userIdentification}
+                setJoinedCorner={setJoinedCorner}
+                joinedCorner={joinedCorner}
               />
             }
           ></Route>
@@ -150,6 +189,17 @@ function App() {
             element={<RecommendationPage setInterestMap={setInterestMap} />}
           ></Route>
           <Route path="/match" element={<MatchRecommendation />}></Route>
+          <Route
+            path="/corner"
+            element={
+              <CornerPage
+                chosenCornerObject={chosenCornerObject}
+                chosenCorner={chosenCorner}
+                updates={updates}
+                joinedCorner={joinedCorner}
+              />
+            }
+          ></Route>
         </Routes>
       </Router>
     </div>

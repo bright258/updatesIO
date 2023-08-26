@@ -7,12 +7,11 @@ export function ListCorners(props: {
   cornerList: any;
   setCornerList: any;
   setChosenCorner: any;
+  joinedCorner: any
 }) {
   let navigate = useNavigate();
 
-  function list() {
-    navigate("/profile");
-  }
+
 
   useEffect(() => {
     axios
@@ -23,7 +22,7 @@ export function ListCorners(props: {
 
   return (
     <>
-      Available Corners you can Join
+      <h1>Available Corners you can Join</h1>
       <br></br>
       <br></br>
       <div>
@@ -33,7 +32,7 @@ export function ListCorners(props: {
               <li>
                 <img
                   src={i.profilePictureUrl}
-                  alt="horse"
+                  alt="img"
                   width="100"
                   height="300"
                   className="rounded-lg inline-flex"
@@ -48,16 +47,29 @@ export function ListCorners(props: {
                   " " +
                   i.category +
                   " "}
-
-                <button
-                  onClick={() => {
-                    props.setChosenCorner(i.id);
-                    navigate("/cornerInfo");
-                  }}
-                  className="my-5 ml-20 mb-0 bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded"
-                >
-                  Join
-                </button>
+                <span>
+                  {props.joinedCorner.includes(i.id) ? (
+                    <button
+                      onClick={() => {
+                        props.setChosenCorner(i.id);
+                        navigate("/corner");
+                      }}
+                      className="my-5 ml-20 mb-0 bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded"
+                    >
+                      enter
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => {
+                        props.setChosenCorner(i.id);
+                        navigate("/cornerInfo");
+                      }}
+                      className="my-5 ml-20 mb-0 bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded"
+                    >
+                      Join
+                    </button>
+                  )}
+                </span>
               </li>
 
               <br></br>

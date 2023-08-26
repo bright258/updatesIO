@@ -12,11 +12,11 @@ export class Update {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column({ nullable: true })
   @Index()
   cornerId: string;
 
-  @Column()
+  @Column({ nullable: true })
   content: string;
 
   @Column({ default: 0 })
